@@ -52,7 +52,8 @@ class TrendingExtractor with Download {
             'sectionListRenderer',
             'contents']);
           for (final content in contents) {
-            if (content['shelfRenderer'] ?? null == null) {
+            var shelfRenderer = content['itemSectionRenderer']['contents'][0]['shelfRenderer'] ?? '';
+            if(shelfRenderer == ''){
               continue;
             }
           
