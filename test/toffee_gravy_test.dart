@@ -1,6 +1,6 @@
 import 'package:toffee_gravy/toffee_gravy.dart';
 import 'package:test/test.dart';
-import 'package:toffee_gravy/trending_extractor.dart';
+import 'package:toffee_gravy/models/trending.dart';
 
 void main() {
   test('calculate', () {

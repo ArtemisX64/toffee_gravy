@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'package:toffee_gravy/constants.dart';
-import 'package:toffee_gravy/download.dart';
-import 'package:toffee_gravy/utils.dart';
+import 'package:toffee_gravy/utils/constants.dart';
+import 'package:toffee_gravy/utils/download.dart';
+import 'package:toffee_gravy/utils/utils.dart';
 
 class Trending {
   final String title;
@@ -42,7 +42,7 @@ class TrendingExtractor with Download {
           final jsonEnd = jsonText.indexOf('};') + 1;
           final cleanJson = jsonText.substring(0, jsonEnd);
           final jsonContents = jsonDecode(cleanJson);
-          var items = getJsonPath(jsonContents, [
+          var contents = getJsonPath(jsonContents, [
             'contents',
             'twoColumnBrowseResultsRenderer',
             'tabs',
@@ -50,8 +50,13 @@ class TrendingExtractor with Download {
             'tabRenderer',
             'content',
             'sectionListRenderer',
-            'contents',
-            0,
+            'contents']);
+          for (final content in contents) {
+            if (content['shelfRenderer'] ?? null == null) {
+              continue;
+            }
+          
+          var items = getJsonPath(content, [
             'itemSectionRenderer',
             'contents',
             0,
@@ -105,10 +110,12 @@ class TrendingExtractor with Download {
               ),
             );
           }
+          }
           break; // Break after finding the correct script
         }
+        }
       }
-      print(trendingList[0].thumbnails[0].url);
+
     }
   }
-}
+
