@@ -5,6 +5,7 @@ import 'package:html/parser.dart';
 import 'package:toffee_gravy/utils/constants.dart';
 import 'package:toffee_gravy/utils/download.dart';
 import 'package:toffee_gravy/utils/utils.dart';
+
 //?gl=JP
 class Trending {
   final String title;
@@ -45,7 +46,11 @@ class TrendingExtractor with Download {
   CountryCode? countryCode;
   TrendingExtractor({countryCode});
   Future init() async {
-    var response = await download(youtubeTrending);
+    var trendLink = youtubeTrending;
+    if (countryCode != null) {
+      trendLink = countryCode!.linkHandler(youtubeTrending);
+    }
+    var response = await download(trendLink);
     if (response.statusCode == 200) {
       var document = parse(response.body);
       List<Element> scriptTags = document.querySelectorAll('script');
@@ -163,9 +168,9 @@ class TrendingExtractor with Download {
 
                 final thumbs = i['thumbnail']['sources'][0];
                 final thumbnail = Thumbnail(
-                      thumbs['url'],
-                      Dimensions(thumbs['width'], thumbs['height']),
-                    );
+                  thumbs['url'],
+                  Dimensions(thumbs['width'], thumbs['height']),
+                );
 
                 trendingShortsList.add(
                   TrendingShort(
@@ -180,10 +185,15 @@ class TrendingExtractor with Download {
               continue;
             }
           }
-       
+
           break; // Break after finding the correct script
         }
       }
     }
+  }
+
+  Future refreshListWithNewCountry(CountryCode code) async {
+    countryCode = code;
+    await init();
   }
 }
