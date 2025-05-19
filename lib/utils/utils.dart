@@ -36,7 +36,9 @@ class CountryCode {
     };
 
   String linkHandler(String link) {
-    return "$link?&gl=$_toString()";
+    final countryCode = _toString();
+    final newLink = "$link?&gl=$countryCode";
+    return newLink;
   }
 }
 

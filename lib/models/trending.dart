@@ -44,7 +44,7 @@ class TrendingExtractor with Download {
   List<Trending> trendingVideosList = [];
   List<TrendingShort> trendingShortsList = [];
   CountryCode? countryCode;
-  TrendingExtractor({countryCode});
+  TrendingExtractor({this.countryCode});
   Future init() async {
     var trendLink = youtubeTrending;
     if (countryCode != null) {
