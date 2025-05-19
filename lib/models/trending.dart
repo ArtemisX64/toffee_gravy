@@ -5,7 +5,7 @@ import 'package:html/parser.dart';
 import 'package:toffee_gravy/utils/constants.dart';
 import 'package:toffee_gravy/utils/download.dart';
 import 'package:toffee_gravy/utils/utils.dart';
-
+//?gl=JP
 class Trending {
   final String title;
   final String videoId;
@@ -42,7 +42,8 @@ class TrendingShort {
 class TrendingExtractor with Download {
   List<Trending> trendingVideosList = [];
   List<TrendingShort> trendingShortsList = [];
-  TrendingExtractor();
+  CountryCode? countryCode;
+  TrendingExtractor({countryCode});
   Future init() async {
     var response = await download(youtubeTrending);
     if (response.statusCode == 200) {

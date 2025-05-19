@@ -21,6 +21,25 @@ class Channel {
   Channel(this.name, this.id, this.avatar);
 }
 
+enum Country {
+  india,
+  japan
+}
+
+class CountryCode {
+  final Country country;
+  CountryCode({required this.country});
+
+  String _toString() => switch(country){
+    Country.india => "IN"  ,
+    Country.japan => "JP",
+    };
+
+  String linkHandler(String link) {
+    return "$link?&gl=$_toString()";
+  }
+}
+
 dynamic getJsonPath(Map json, List keys) {
   dynamic value = json; 
   for (final key in keys) {
