@@ -11,7 +11,6 @@ A YouTube extractor/parser written in Dart that scrapes and extracts content dir
 ---
 
 ## 🔜 Planned Features
-- [ ] Support Trending Shorts
 - [ ] Search functionality
 - [ ] Extract direct video streaming URLs
 - [ ] Optional support for Invidious backend
