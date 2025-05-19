@@ -14,19 +14,34 @@ class Trending {
   final Channel channel;
   final String length;
   final String published;
-  Trending(
-    this.title,
-    this.videoId,
-    this.thumbnails,
-    this.viewCount,
-    this.channel,
-    this.length,
-    this.published,
-  );
+  Trending({
+    required this.title,
+    required this.videoId,
+    required this.thumbnails,
+    required this.viewCount,
+    required this.channel,
+    required this.length,
+    required this.published,
+  });
+}
+
+class TrendingShort {
+  final String title;
+  final String videoId;
+  final Thumbnail thumbnail;
+  final String viewCount;
+
+  TrendingShort({
+    required this.title,
+    required this.videoId,
+    required this.thumbnail,
+    required this.viewCount,
+  });
 }
 
 class TrendingExtractor with Download {
-  List<Trending> trendingList = [];
+  List<Trending> trendingVideosList = [];
+  List<TrendingShort> trendingShortsList = [];
   TrendingExtractor();
   Future init() async {
     var response = await download(youtubeTrending);
@@ -41,7 +56,6 @@ class TrendingExtractor with Download {
           final jsonText = scriptText.substring(jsonStart);
           final jsonEnd = jsonText.indexOf('};') + 1;
           final cleanJson = jsonText.substring(0, jsonEnd);
-          print(cleanJson);
           final jsonContents = jsonDecode(cleanJson);
           var contents = getJsonPath(jsonContents, [
             'contents',
@@ -51,77 +65,124 @@ class TrendingExtractor with Download {
             'tabRenderer',
             'content',
             'sectionListRenderer',
-            'contents']);
+            'contents',
+          ]);
           for (final content in contents) {
-            var shelfRenderer = content['itemSectionRenderer']['contents'][0]['shelfRenderer'] ?? '';
-            if(shelfRenderer == ''){
+            if (content['itemSectionRenderer']['contents'][0]['shelfRenderer'] !=
+                null) {
+              var items = getJsonPath(content, [
+                'itemSectionRenderer',
+                'contents',
+                0,
+                'shelfRenderer',
+                'content',
+                'expandedShelfContentsRenderer',
+                'items',
+              ]);
+              if (items == null) {
+                continue;
+              }
+
+              for (var item in items) {
+                final i = item['videoRenderer'];
+                final videoId = i['videoId'];
+                final viewCount = i['viewCountText']['simpleText'];
+                final owner = i["ownerText"]["runs"][0];
+                final avatar = getJsonPath(i, [
+                  'avatar',
+                  'decoratedAvatarViewModel',
+                  'avatar',
+                  'avatarViewModel',
+                  'image',
+                  'sources',
+                  0,
+                  'url',
+                ]);
+                final channel = Channel(
+                  owner['text'],
+                  owner['navigationEndpoint']['browseEndpoint']['canonicalBaseUrl'],
+                  avatar,
+                );
+                final length = i['lengthText']['simpleText'];
+                final published = i['publishedTimeText']['simpleText'];
+
+                List<Thumbnail> thumbnails = [];
+                for (var thumbnail in i['thumbnail']['thumbnails']) {
+                  thumbnails.add(
+                    Thumbnail(
+                      thumbnail['url'],
+                      Dimensions(thumbnail['width'], thumbnail['height']),
+                    ),
+                  );
+                }
+
+                trendingVideosList.add(
+                  Trending(
+                    title: i['title']['runs'][0]['text'],
+                    videoId: videoId,
+                    thumbnails: thumbnails,
+                    viewCount: viewCount,
+                    channel: channel,
+                    length: length,
+                    published: published,
+                  ),
+                );
+              }
+            } else if (content['itemSectionRenderer']['contents'][0]['reelShelfRenderer'] !=
+                null) {
+              var items = getJsonPath(content, [
+                'itemSectionRenderer',
+                'contents',
+                0,
+                'reelShelfRenderer',
+                'items',
+              ]);
+              if (items == null) {
+                continue;
+              }
+
+              for (var item in items) {
+                final i = item['shortsLockupViewModel'];
+                final videoId = getJsonPath(i, [
+                  'onTap',
+                  'innertubeCommand',
+                  'reelWatchEndpoint',
+                  'videoId',
+                ]);
+                final viewCount = getJsonPath(i, [
+                  'overlayMetadata',
+                  'secondaryText',
+                  'content',
+                ]);
+                final title = getJsonPath(i, [
+                  'overlayMetadata',
+                  'primaryText',
+                  'content',
+                ]);
+
+                final thumbs = i['thumbnail']['sources'][0];
+                final thumbnail = Thumbnail(
+                      thumbs['url'],
+                      Dimensions(thumbs['width'], thumbs['height']),
+                    );
+
+                trendingShortsList.add(
+                  TrendingShort(
+                    title: title,
+                    videoId: videoId,
+                    thumbnail: thumbnail,
+                    viewCount: viewCount,
+                  ),
+                );
+              }
+            } else {
               continue;
             }
-          
-          var items = getJsonPath(content, [
-            'itemSectionRenderer',
-            'contents',
-            0,
-            'shelfRenderer',
-            'content',
-            'expandedShelfContentsRenderer',
-            'items',
-          ]);
-          if (items == null) {
-            continue;
           }
-          
-          for (var item in items) {
-            final i = item['videoRenderer'];
-            final videoId = i['videoId'];
-            final viewCount = i['viewCountText']['simpleText'];
-            final owner = i["ownerText"]["runs"][0];
-            final avatar = getJsonPath(i, [
-              'avatar',
-              'decoratedAvatarViewModel',
-              'avatar',
-              'avatarViewModel',
-              'image',
-              'sources',
-              0,
-              'url',
-            ]);
-            final channel = Channel(
-              owner['text'],
-              owner['navigationEndpoint']['browseEndpoint']['canonicalBaseUrl'],
-              avatar,
-            );
-            final length = i['lengthText']['simpleText'];
-            final published = i['publishedTimeText']['simpleText'];
-
-            List<Thumbnail> thumbnails = [];
-            for (var thumbnail in i['thumbnail']['thumbnails']) {
-              thumbnails.add(
-                Thumbnail(
-                  thumbnail['url'],
-                  Dimensions(thumbnail['width'], thumbnail['height']),
-                ),
-              );
-            }
-
-            trendingList.add(
-              Trending(
-                i['title']['runs'][0]['text'],
-                videoId,
-                thumbnails,
-                viewCount,
-                channel,
-                length,
-                published,
-              ),
-            );
-          }
-          }
+       
           break; // Break after finding the correct script
         }
-        }
       }
-
     }
   }
-
+}
