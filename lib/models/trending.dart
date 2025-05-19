@@ -41,6 +41,7 @@ class TrendingExtractor with Download {
           final jsonText = scriptText.substring(jsonStart);
           final jsonEnd = jsonText.indexOf('};') + 1;
           final cleanJson = jsonText.substring(0, jsonEnd);
+          print(cleanJson);
           final jsonContents = jsonDecode(cleanJson);
           var contents = getJsonPath(jsonContents, [
             'contents',
@@ -66,6 +67,10 @@ class TrendingExtractor with Download {
             'expandedShelfContentsRenderer',
             'items',
           ]);
+          if (items == null) {
+            continue;
+          }
+          
           for (var item in items) {
             final i = item['videoRenderer'];
             final videoId = i['videoId'];
