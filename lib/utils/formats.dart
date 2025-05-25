@@ -1,3 +1,0 @@
-enum VideoFormat{
-  mp4
-}

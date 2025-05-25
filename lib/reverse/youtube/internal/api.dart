@@ -1,4 +1,6 @@
 const _iosClientVersion = '20.10.4';
+const _androidVRClientVersion = '1.56.21';
+const _androidClientVersion = '19.09.37';
 
 class YoutubeApi {
   final String _clientName;
@@ -12,6 +14,7 @@ class YoutubeApi {
   final String? _osVersion;
   final String? _timeZone;
   final String? _userAgent;
+  final String? _androidSdkVersion;
   final int? _utcOffsetMinutes;
 
   const YoutubeApi({
@@ -25,6 +28,7 @@ class YoutubeApi {
     String? osVersion,
     String? timeZone,
     String? userAgent,
+    String? androidSdkVersion,
     String? gl,
     int? utcOffsetMinutes,
   }) : _clientName = clientName,
@@ -38,7 +42,8 @@ class YoutubeApi {
        _osVersion = osVersion,
        _timeZone = timeZone,
        _userAgent = userAgent,
-       _utcOffsetMinutes = utcOffsetMinutes;
+       _utcOffsetMinutes = utcOffsetMinutes,
+       _androidSdkVersion = androidSdkVersion;
 
   //Creates Header File
   Map<String, String> generateHeader() {
@@ -65,6 +70,7 @@ class YoutubeApi {
   String? get timeZone => _timeZone;
   String? get userAgent => _userAgent;
   String? get gl => _gl;
+  String? get androidSdkVersion => _androidSdkVersion;
   int? get utcOffsetMinutes => _utcOffsetMinutes;
 }
 
@@ -83,6 +89,41 @@ class IosApi extends YoutubeApi {
         gl: gl ?? 'US',
         userAgent:
             'com.google.ios.youtube/$_iosClientVersion (iPhone16,2; U; CPU iOS 18_1_0 like Mac OS X; US)',
+        utcOffsetMinutes: 0,
+      );
+}
+
+
+//Made after Android app
+class AndroidApi extends YoutubeApi {
+    AndroidApi({String? hl, String? gl})
+    : super(
+        clientName: 'ANDROID',
+        clientVersion: _androidClientVersion,
+        androidSdkVersion: '31',
+        timeZone: 'UTC',
+        hl: hl ?? 'en',
+        gl: gl ?? 'US',
+        userAgent:
+            'com.google.android.youtube/$_androidClientVersion (Linux; U; Android 11) gzip',
+        utcOffsetMinutes: 0,
+      );
+}
+
+// Thanks youtube explode dart for explaining about AndroidVR
+class AndroidVRApi extends YoutubeApi {
+  AndroidVRApi({String? hl, String? gl})
+    : super(
+        clientName: 'ANDROID_VR',
+        clientVersion: _androidVRClientVersion,
+        deviceModel: 'Quest 3',
+        osName: 'Android',
+        osVersion: '12',
+        androidSdkVersion: '32',
+        timeZone: 'UTC',
+        hl: hl ?? 'en',
+        userAgent:
+            'com.google.android.youtube.tv.vr/$_androidVRClientVersion (Linux; U; Android 12; Quest 3 Build/VRQ1.230928.001) gzip',
         utcOffsetMinutes: 0,
       );
 }

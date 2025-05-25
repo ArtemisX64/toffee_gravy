@@ -20,3 +20,12 @@ A YouTube extractor/parser written in Dart that scrapes and extracts content dir
 ## 📦 Usage
 
 To use this package in your Dart or Flutter project, add it as a dependency (local or via Git).
+
+## Credits
+- [Tyrrrz] for creating [YoutubeExplode] in C#
+- [Hexer10] for jsengine and inspiring.
+- [AsgerFeldthaus] For the amazing jsparser library
+
+[Tyrrrz]: https://github.com/Tyrrrz/
+[Hexer10]: https://github.com/Hexer10/
+[AsgerFeldthaus]: https://github.com/anuragvohraec/

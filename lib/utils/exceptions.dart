@@ -25,3 +25,7 @@ class NoValidCodecFound extends BitterToffee {
 class RequestParameterNotFound extends BitterToffee{
   RequestParameterNotFound({String? message}): super('No Request Parameter Found(${message ?? ''})');
 }
+
+class ToffeeJsException extends BitterToffee {
+ ToffeeJsException({String? message}): super('Json Parser (${message ?? ''})');
+}

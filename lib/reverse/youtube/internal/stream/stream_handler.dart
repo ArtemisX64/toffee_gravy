@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:toffee_gravy/model/codecs/caudio.dart';
-import 'package:toffee_gravy/model/codecs/cmuxed.dart';
+import 'package:toffee_gravy/model/codecs/cvideo.dart';
 import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/url_handler.dart';
@@ -49,6 +49,7 @@ class StreamHandler {
             'userAgent':
                 _api.userAgent,
           if (_api.gl != null) 'gl': _api.gl,
+          if(_api.androidSdkVersion != null) 'androidSdkVersion' : _api.androidSdkVersion,
           if (_api.utcOffsetMinutes != null) 'utcOffsetMinutes': _api.utcOffsetMinutes,
           'visitorData': visitorData,
         },
@@ -87,7 +88,7 @@ class StreamHandler {
   
     //Thumbnail
      Thumbnail? channelThumbnails;
-    final elements = jsonResponse["endscreen"]["endscreenRenderer"]["elements"];
+    final elements = jsonResponse["endscreen"]?["endscreenRenderer"]?["elements"];
     if(elements != null){
     var jChannelThumbnails = [];
     for (var element in elements) {
@@ -113,16 +114,13 @@ class StreamHandler {
     final streamingData = jsonResponse['streamingData']?['adaptiveFormats'];
     Map<dynamic, String> streamUrls = {};
     for(final data in streamingData){
-      if (qualityOrdinal.contains(data["qualityOrdinal"])){
-        final codec = MuxedCodec(data["qualityOrdinal"], data["mimeType"]);
-        streamUrls[codec] = data["url"];
-      }
-      else if (data["audioQuality"] != null) {
-        final codec = AudioCodec(data["mimeType"]);
+     if (data["audioQuality"] != null) {
+        final codec = AudioCodec(data["mimeType"], data["audioQuality"]);
         streamUrls[codec] = data["url"];
       }
       else if (data["qualityLabel"] != null) {
-        //TODO: Implement it
+        final codec = VideoCodec(data["mimeType"], data["quality"]);
+        streamUrls[codec] = data["url"];
       }
     }
     return StreamInfo(

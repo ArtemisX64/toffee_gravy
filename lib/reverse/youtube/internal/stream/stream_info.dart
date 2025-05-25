@@ -1,4 +1,3 @@
-import 'package:toffee_gravy/model/codecs/codec.dart';
 import 'package:toffee_gravy/model/thumbnail.dart';
 
 
