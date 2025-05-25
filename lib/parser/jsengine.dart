@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'jsparser2/jsparser.dart';
+import 'newjsparser/jsparser.dart';
 
 class JSEngine {
   Map<String, dynamic> context;
