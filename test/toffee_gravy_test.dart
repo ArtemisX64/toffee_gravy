@@ -2,6 +2,7 @@ import 'package:test/test.dart';
 import 'package:toffee_gravy/model/codecs/caudio.dart';
 import 'package:toffee_gravy/model/codecs/cquality.dart';
 import 'package:toffee_gravy/model/codecs/cvideo.dart';
+import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/pages/trending.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
@@ -14,6 +15,7 @@ void main() {
     var client = YoutubeClient();
     var trending = Trending(client: client);
     await trending.init();
+    print(trending.videos[0].thumbnail.getThumbnailUrl(ThumbnailQuality.low));
   });
 
   test('get360pVideo', () async {
