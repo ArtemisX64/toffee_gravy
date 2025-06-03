@@ -71,7 +71,7 @@ class Trending {
                 for (var thumbnail in i['thumbnail']['thumbnails']) {
                   thumbnails[(thumbnail['width'], thumbnail['height'])] = thumbnail['url'];
                 }
-                
+ 
                 videos.add(
                   Info(
                     title: i['title']['runs'][0]['text'],
