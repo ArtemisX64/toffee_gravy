@@ -1,71 +1,26 @@
-import 'dart:convert';
+import 'package:toffee_gravy/model/thumbnail.dart';
+import 'package:toffee_gravy/pages/trending_info.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
+import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
+import 'package:toffee_gravy/toffee_gravy.dart' show Channel;
+import 'package:toffee_gravy/utils/utils.dart' show getJsonPath;
 
-import 'package:html/dom.dart';
-import 'package:html/parser.dart';
-import 'package:toffee_gravy/utils/constants.dart';
-import 'package:toffee_gravy/utils/download.dart';
-import 'package:toffee_gravy/utils/utils.dart';
 
-//?gl=JP
 class Trending {
-  final String title;
-  final String videoId;
-  final List<Thumbnail> thumbnails;
-  final String viewCount;
-  final Channel channel;
-  final String length;
-  final String published;
-  Trending({
-    required this.title,
-    required this.videoId,
-    required this.thumbnails,
-    required this.viewCount,
-    required this.channel,
-    required this.length,
-    required this.published,
-  });
-}
+  YoutubeApi? api;
+  final YoutubeClient client;
+  late PageHandler handler;
+  final List<ShortInfo> shorts = [];
+  final List<Info> videos = [];
+  Trending({required this.client, this.api}) {
+    api ??= WebApi();
+    handler = PageHandler(client: client);
+  }
 
-class TrendingShort {
-  final String title;
-  final String videoId;
-  final Thumbnail thumbnail;
-  final String viewCount;
-
-  TrendingShort({
-    required this.title,
-    required this.videoId,
-    required this.thumbnail,
-    required this.viewCount,
-  });
-}
-
-class TrendingExtractor with Download {
-  List<Trending> trendingVideosList = [];
-  List<TrendingShort> trendingShortsList = [];
-  CountryCode? countryCode;
-  TrendingExtractor({this.countryCode});
-  Future init() async {
-    var trendLink = youtubeTrending;
-    if (countryCode != null) {
-      trendLink = countryCode!.linkHandler(youtubeTrending);
-    }
-    var response = await download(trendLink);
-    if (response.statusCode == 200) {
-      var document = parse(response.body);
-      List<Element> scriptTags = document.querySelectorAll('script');
-      final prefix = 'var ytInitialData = ';
-      for (var script in scriptTags) {
-        if (script.innerHtml.contains(prefix)) {
-          final scriptText = script.innerHtml;
-          final jsonStart = scriptText.indexOf(prefix) + prefix.length;
-          final jsonText = scriptText.substring(jsonStart);
-          final jsonEnd = jsonText.indexOf('};') + 1;
-          final cleanJson = jsonText.substring(0, jsonEnd);
-          final jsonContents = jsonDecode(cleanJson);
-          var contents = getJsonPath(jsonContents, [
-            'contents',
-            'twoColumnBrowseResultsRenderer',
+  Future<void> init() async {
+    final trending = await handler.getPage('browse', 'FEtrending');
+     var contents = getJsonPath(trending, [
             'tabs',
             0,
             'tabRenderer',
@@ -112,21 +67,16 @@ class TrendingExtractor with Download {
                 final length = i['lengthText']['simpleText'];
                 final published = i['publishedTimeText']['simpleText'];
 
-                List<Thumbnail> thumbnails = [];
+                Map<(int, int), String> thumbnails = {};
                 for (var thumbnail in i['thumbnail']['thumbnails']) {
-                  thumbnails.add(
-                    Thumbnail(
-                      thumbnail['url'],
-                      Dimensions(thumbnail['width'], thumbnail['height']),
-                    ),
-                  );
+                  thumbnails[(thumbnail['width'], thumbnail['height'])] = thumbnail['url'];
                 }
-
-                trendingVideosList.add(
-                  Trending(
+                
+                videos.add(
+                  Info(
                     title: i['title']['runs'][0]['text'],
                     videoId: videoId,
-                    thumbnails: thumbnails,
+                    thumbnail: Thumbnail(thumbnails),
                     viewCount: viewCount,
                     channel: channel,
                     length: length,
@@ -167,16 +117,15 @@ class TrendingExtractor with Download {
                 ]);
 
                 final thumbs = i['thumbnail']['sources'][0];
-                final thumbnail = Thumbnail(
-                  thumbs['url'],
-                  Dimensions(thumbs['width'], thumbs['height']),
-                );
+                final Map<(int, int), String> thumbnail = {
+                  (thumbs['width'], thumbs['height']): thumbs['url']
+                };
 
-                trendingShortsList.add(
-                  TrendingShort(
+                shorts.add(
+                  ShortInfo(
                     title: title,
                     videoId: videoId,
-                    thumbnail: thumbnail,
+                    thumbnail: Thumbnail(thumbnail),
                     viewCount: viewCount,
                   ),
                 );
@@ -186,14 +135,5 @@ class TrendingExtractor with Download {
             }
           }
 
-          break; // Break after finding the correct script
         }
-      }
-    }
-  }
-
-  Future refreshListWithNewCountry(CountryCode code) async {
-    countryCode = code;
-    await init();
-  }
 }

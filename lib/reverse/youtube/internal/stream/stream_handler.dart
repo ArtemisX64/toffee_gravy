@@ -4,16 +4,12 @@ import 'package:toffee_gravy/model/codecs/caudio.dart';
 import 'package:toffee_gravy/model/codecs/cvideo.dart';
 import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
-import 'package:toffee_gravy/reverse/youtube/internal/url_handler.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/handlers/url_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_info.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
 import 'package:toffee_gravy/utils/exceptions.dart';
 
-const qualityOrdinal = [
-  "QUALITY_ORDINAL_144P",
-  "QUALITY_ORDINAL_240P",
-  "QUALITY_ORDINAL_360P",
-];
+
 
 class StreamHandler {
   String? _visitorData;

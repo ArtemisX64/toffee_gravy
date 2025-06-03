@@ -1,4 +1,6 @@
-library charcode;
+// ignore_for_file: constant_identifier_names
+
+library;
 
 const int NULL = 0;
 const int BS = 8; // backspace

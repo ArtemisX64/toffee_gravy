@@ -4,13 +4,15 @@ import 'package:toffee_gravy/model/codecs/cquality.dart';
 import 'package:toffee_gravy/model/codecs/cvideo.dart';
 import 'package:toffee_gravy/pages/trending.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
-import 'package:toffee_gravy/utils/utils.dart';
+
 
 void main() {
   test('trending', () async {
-    var trending = TrendingExtractor();
+    var client = YoutubeClient();
+    var trending = Trending(client: client);
     await trending.init();
   });
 
@@ -50,8 +52,8 @@ void main() {
     final stream = await youtubeVideoExtractor.getStream("qr1AvisQcV8");
     stream.streamUrls!.forEach((key, value) {
       if (key is VideoCodec && key.quality == Cquality.hd2160) {
-        print(key.codec);
-        print(value);
+        // print(key.codec);
+        // print(value);
       }
     });
   });
@@ -82,17 +84,12 @@ void main() {
       }
     });
   });
-  test('trending with country code', () async {
-    var trending = TrendingExtractor(
-      countryCode: CountryCode(country: Country.japan),
-    );
-    await trending.init();
+
+  test('check search', () async {
+    var client = YoutubeClient();
+    final page = PageHandler(client: client);
+    await page.getPage('search', 'pokemon');
   });
 
-  test('trending dynamic change country', () async {
-    var trending = TrendingExtractor();
-    final country = CountryCode(country: Country.japan);
-    await trending.init();
-    await trending.refreshListWithNewCountry(country);
-  });
+
 }

@@ -1,10 +1,3 @@
-class Thumbnail {
-  final String url;
-  final Dimensions dimensions;
-
-  Thumbnail(this.url, this.dimensions);
-  
-}
 
 class Dimensions {
   final int width;

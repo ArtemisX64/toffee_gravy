@@ -1,6 +1,7 @@
 const _iosClientVersion = '20.10.4';
 const _androidVRClientVersion = '1.56.21';
 const _androidClientVersion = '19.09.37';
+const _webClientVersion = '2.20250523.01.00';
 
 class YoutubeApi {
   final String _clientName;
@@ -109,6 +110,20 @@ class AndroidApi extends YoutubeApi {
         utcOffsetMinutes: 0,
       );
 }
+
+//Made for web client
+class WebApi extends YoutubeApi {
+  WebApi({String? hl, String? gl}) : super(
+    clientName: 'WEB',
+    clientVersion: _webClientVersion,
+    timeZone: 'UTC',
+    hl: hl ?? 'en',
+    gl: gl ?? 'US',
+    userAgent: 'Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0,gzip(gfe)',
+    utcOffsetMinutes: 0,
+  );
+}
+
 
 // Thanks youtube explode dart for explaining about AndroidVR
 class AndroidVRApi extends YoutubeApi {
