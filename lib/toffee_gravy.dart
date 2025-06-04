@@ -9,3 +9,5 @@ export 'model/codecs/caudio.dart';
 export 'model/codecs/cvideo.dart';
 export 'model/trending_info.dart';
 export 'utils/utils.dart';
+export 'reverse/youtube/youtube_client_handler.dart';
+export 'reverse/youtube/internal/api.dart';

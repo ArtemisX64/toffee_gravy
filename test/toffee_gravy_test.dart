@@ -2,7 +2,6 @@ import 'package:test/test.dart';
 import 'package:toffee_gravy/model/codecs/caudio.dart';
 import 'package:toffee_gravy/model/codecs/cquality.dart';
 import 'package:toffee_gravy/model/codecs/cvideo.dart';
-import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/pages/trending.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
