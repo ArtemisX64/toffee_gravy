@@ -48,6 +48,7 @@ class Trending {
                 final i = item['videoRenderer'];
                 final videoId = i['videoId'];
                 final viewCount = i['viewCountText']['simpleText'];
+                final descriptionSnippet = i['descriptionSnippet']['runs'][0]['text'];
                 final shortViewCount = i['shortViewCountText']['simpleText'];
                 final owner = i["ownerText"]["runs"][0];
                 final avatar = getJsonPath(i, [
@@ -77,6 +78,7 @@ class Trending {
                   Info(
                     title: i['title']['runs'][0]['text'],
                     videoId: videoId,
+                    descriptionSnippet: descriptionSnippet,
                     thumbnail: Thumbnail(thumbnails),
                     viewCount: viewCount,
                     shortViewCount: shortViewCount,
@@ -117,6 +119,7 @@ class Trending {
                   'primaryText',
                   'content',
                 ]);
+                final descriptionSnippet = i['descriptionSnippet']['runs'][0]['text'];
 
                 final thumbs = i['thumbnail']['sources'][0];
                 final Map<(int, int), String> thumbnail = {
@@ -127,6 +130,7 @@ class Trending {
                   ShortInfo(
                     title: title,
                     videoId: videoId,
+                    descriptionSnippet: descriptionSnippet,
                     thumbnail: Thumbnail(thumbnail),
                     viewCount: viewCount,
                   ),
