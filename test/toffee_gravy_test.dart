@@ -15,7 +15,6 @@ void main() {
     var client = YoutubeClient();
     var trending = Trending(client: client);
     await trending.init();
-    print(trending.videos[0].thumbnail.getThumbnailUrl(ThumbnailQuality.low));
   });
 
   test('get360pVideo', () async {

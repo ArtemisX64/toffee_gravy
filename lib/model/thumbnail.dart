@@ -28,6 +28,8 @@ class Thumbnail {
   }
 
   String? getThumbnailUrl(ThumbnailQuality quality) => thumbnail[quality];
+
+  String? getThumbnailGeneric(ThumbnailQuality quality) => getThumbnailUrl(quality)?.split("?")[0];
 }
 
 enum ThumbnailQuality { h720, low, medium, high }

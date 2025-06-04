@@ -2,4 +2,10 @@ library;
 
 export 'pages/trending.dart';
 export 'utils/exceptions.dart';
+export 'model/thumbnail.dart';
+export 'model/codecs/cquality.dart';
+export 'model/codecs/codec.dart';
+export 'model/codecs/caudio.dart';
+export 'model/codecs/cvideo.dart';
+export 'model/trending_info.dart';
 export 'utils/utils.dart';

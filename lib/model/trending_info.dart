@@ -16,11 +16,12 @@ class Info extends BasicInfo {
     required String videoId,
     required String title,
     required String viewCount,
+    required String shortViewCount,
     required Thumbnail thumbnail,
     required this.channel,
     required this.length,
     required this.published,
-  }) : super(videoId, title, viewCount, thumbnail);
+  }) : super(videoId, title, viewCount, shortViewCount, thumbnail);
 }
 
 class ShortInfo extends BasicInfo {
@@ -29,7 +30,7 @@ class ShortInfo extends BasicInfo {
     required String title,
     required String viewCount,
     required Thumbnail thumbnail,
-  }) : super(videoId, title, viewCount, thumbnail);
+  }) : super(videoId, title, viewCount,viewCount, thumbnail);
 }
 
 class BasicInfo {
@@ -37,11 +38,13 @@ class BasicInfo {
   final String videoId;
   final Thumbnail thumbnail;
   final String viewCount;
+  final String shortViewCount;
 
   const BasicInfo(
     this.videoId,
     this.title,
     this.viewCount,
+    this.shortViewCount,
     this.thumbnail,
   );
 }

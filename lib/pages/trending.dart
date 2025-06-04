@@ -1,5 +1,5 @@
 import 'package:toffee_gravy/model/thumbnail.dart';
-import 'package:toffee_gravy/pages/trending_info.dart';
+import 'package:toffee_gravy/model/trending_info.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
@@ -48,6 +48,7 @@ class Trending {
                 final i = item['videoRenderer'];
                 final videoId = i['videoId'];
                 final viewCount = i['viewCountText']['simpleText'];
+                final shortViewCount = i['shortViewCountText']['simpleText'];
                 final owner = i["ownerText"]["runs"][0];
                 final avatar = getJsonPath(i, [
                   'avatar',
@@ -78,6 +79,7 @@ class Trending {
                     videoId: videoId,
                     thumbnail: Thumbnail(thumbnails),
                     viewCount: viewCount,
+                    shortViewCount: shortViewCount,
                     channel: channel,
                     length: length,
                     published: published,
