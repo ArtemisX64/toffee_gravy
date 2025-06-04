@@ -2,12 +2,12 @@ import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_handler.dart
 import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_info.dart';
 import 'package:toffee_gravy/toffee_gravy.dart';
 
-class Watch {
+class WatchInfo {
   final YoutubeClient _client;
   final YoutubeApi _api;
   late StreamHandler _handler;
   late StreamInfo videoInfo;
-  Watch({required YoutubeClient client, YoutubeApi? api}): _api = api ?? AndroidVRApi(), _client = client;
+  WatchInfo({required YoutubeClient client, YoutubeApi? api}): _api = api ?? AndroidVRApi(), _client = client;
 
   Future<void> initStream(String id) async{
     _handler = StreamHandler(_client, _api);

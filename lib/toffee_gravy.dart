@@ -11,3 +11,4 @@ export 'model/trending_info.dart';
 export 'utils/utils.dart';
 export 'reverse/youtube/youtube_client_handler.dart';
 export 'reverse/youtube/internal/api.dart';
+export 'pages/watch_info.dart';
