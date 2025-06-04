@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/model/trending_info.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
