@@ -9,8 +9,8 @@ enum AudioCodecType{
 
 
 class AudioCodec extends Codec {
-  late AudioCodecType codec;
-  late Cquality quality;
+  AudioCodecType? codec;
+  Cquality? quality;
 
   AudioCodec(String codecString, String audioQuality) {
     final audioCodec = super.getCodec(codecString);

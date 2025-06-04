@@ -5,8 +5,8 @@ import 'package:toffee_gravy/utils/exceptions.dart';
 enum VideoCodecType { avc1, av01, vp09, vp9 }
 
 class VideoCodec extends Codec {
-  late VideoCodecType codec;
-  late Cquality quality;
+  VideoCodecType? codec;
+  Cquality? quality;
   VideoCodec(String codecString, String qualityString) {
     final videoCodec = super.getCodec(codecString);
     switch (videoCodec) {

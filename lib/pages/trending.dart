@@ -9,7 +9,7 @@ import 'package:toffee_gravy/utils/utils.dart' show getJsonPath;
 class Trending {
   YoutubeApi? api;
   final YoutubeClient client;
-  late PageHandler handler;
+  PageHandler? handler;
   final List<ShortInfo> shorts = [];
   final List<Info> videos = [];
   Trending({required this.client, this.api}) {
@@ -18,7 +18,7 @@ class Trending {
   }
 
   Future<void> init() async {
-    final trending = await handler.getPage('browse', 'FEtrending');
+    final trending = await handler!.getPage('browse', 'FEtrending');
     var contents = getJsonPath(trending, [
       'tabs',
       0,
