@@ -17,7 +17,7 @@ class Info extends BasicInfo {
     required String title,
     required String viewCount,
     required String shortViewCount,
-    required String descriptionSnippet,
+    required String? descriptionSnippet,
     required Thumbnail thumbnail,
     required this.channel,
     required this.length,
@@ -29,7 +29,7 @@ class ShortInfo extends BasicInfo {
   const ShortInfo({
     required String videoId,
     required String title,
-    required String descriptionSnippet,
+    required String? descriptionSnippet,
     required String viewCount,
     required Thumbnail thumbnail,
   }) : super(videoId, title, descriptionSnippet, viewCount,viewCount, thumbnail);
@@ -37,7 +37,7 @@ class ShortInfo extends BasicInfo {
 
 class BasicInfo {
   final String title;
-  final String descriptionSnippet;
+  final String? descriptionSnippet;
   final String videoId;
   final Thumbnail thumbnail;
   final String viewCount;
