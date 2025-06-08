@@ -1,1 +1,3 @@
-class SearchExtractor {}
+class SearchExtractor {
+  
+}

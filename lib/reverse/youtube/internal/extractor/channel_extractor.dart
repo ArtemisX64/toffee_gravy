@@ -66,7 +66,10 @@ class ChannelExtractor {
 
   //Subscribers
   final subscriberMeta = getJsonPath(headerViewModel, ['metadata', 'contentMetadataViewModel', 'metadataRows', 1, 'metadataParts', 0, 'text', 'content']);
-  final subscribers = subscriberMeta;
+  String subscribers = subscriberMeta;
+  if (!subscribers.contains("subscribers")) {
+    subscribers = '';
+  }
 
 
     _info = ChannelInfo(id: id, title: title, channelUrl: channelUrl, banner: banner, familySafe: familySafe, tags: tags, avatar: avatar, subscribers: subscribers);
