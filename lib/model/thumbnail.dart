@@ -15,7 +15,7 @@ class VideoThumbnail extends _Thumbnail {
         thumbnail[ThumbnailQuality.medium] = value;
         break;
         case (405, 720):
-        thumbnail[ThumbnailQuality.large] = value;
+        thumbnail[ThumbnailQuality.shorts] = value;
         break;
         default:
           print("Invalid quality: $key");
@@ -28,11 +28,11 @@ class VideoThumbnail extends _Thumbnail {
 
 class Avatar extends _Thumbnail {
   Avatar(Map<(int, int), String> thumbnails) {
-    final Map<AvatarQuality, String> thumbnail = {};
+    final Map<ThumbnailQuality, String> thumbnail = {};
     thumbnails.forEach((key, value) {
       switch (key) {
         case (900, 900):
-          thumbnail[AvatarQuality.large] = value;
+          thumbnail[ThumbnailQuality.shorts] = value;
           break;
         default:
           print("Invalid quality: $key");
@@ -40,6 +40,16 @@ class Avatar extends _Thumbnail {
     });
 
     super.thumbnail = thumbnail;
+  }
+
+  @Deprecated("Use getThumbnail instead")
+  @override
+  String? getThumbnailGeneric(quality) {
+    return null;
+  }
+
+  String? getThumbnail() {
+    return super.getThumbnailGeneric(ThumbnailQuality.shorts);
   }
 }
 

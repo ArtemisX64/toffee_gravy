@@ -1,6 +1,3 @@
-import 'package:toffee_gravy/model/thumbnail.dart';
-
-
 class StreamInfo {
   final String id;
   final String title;
