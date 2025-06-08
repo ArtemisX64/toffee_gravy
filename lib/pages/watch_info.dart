@@ -1,21 +1,23 @@
-import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_handler.dart';
-import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_info.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/handlers/stream_handler.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/models/stream_info.dart';
 import 'package:toffee_gravy/toffee_gravy.dart';
 
 class WatchInfo {
   final StreamHandler _handler;
-  StreamInfo? videoInfo;
+  late final StreamInfo _info;
   WatchInfo({required YoutubeClient client, YoutubeApi? api}): _handler = StreamHandler(client, api ?? AndroidVRApi());
 
   Future<void> initStream(String id) async{
-    videoInfo = await _handler.getStream(id);
+   _info = await _handler.getStream(id);
   }
 
+
   List<Cquality>? getAvailableVideoFormats(VideoCodecType videoCodec){
-    final keys = videoInfo?.streamUrls?.keys.toList();
-    if(keys == null) {
+    final streams = _info.getStreams();
+    if(streams == null) {
       return null;
     }
+    final keys = streams.keys.toList();
     List<Cquality> formats = [];
     for (final key in keys){
       if(key is VideoCodec && key.codec == videoCodec){
@@ -27,10 +29,11 @@ class WatchInfo {
   }
 
   List<Cquality>? getAvailableAudioFormats(AudioCodecType audioCodec) {
-    final keys = videoInfo?.streamUrls?.keys.toList();
-    if(keys == null) {
+    final streams = _info.getStreams();
+    if (streams == null) {
       return null;
     }
+    final keys = streams.keys.toList();
     List<Cquality> formats = [];
     for (final key in keys){
       if(key is AudioCodec && key.codec == audioCodec){
@@ -41,13 +44,14 @@ class WatchInfo {
   }
 
   String? getVideoUrl(VideoCodecType videoCodec,Cquality quality) {
-    final keys = videoInfo?.streamUrls?.keys.toList();
-    if (keys == null){
+    final streams = _info.getStreams();
+    if (streams == null) {
       return null;
     }
+    final keys = streams.keys.toList();
     for (final key in keys) {
       if(key is VideoCodec && key.codec == videoCodec && key.quality == quality){
-        return videoInfo?.streamUrls?[key];
+        return streams[key];
       }
     }
     return null;
@@ -60,13 +64,14 @@ class WatchInfo {
       case Cquality.medium: break;
       default: quality = Cquality.medium;
     }
-     final keys = videoInfo?.streamUrls?.keys.toList();
-     if(keys == null){
+    final streams = _info.getStreams();
+    if (streams == null) {
       return null;
-     }
+    }
+     final keys = streams.keys.toList();
       for (final key in keys) {
       if(key is AudioCodec && key.codec == audioCodec && key.quality == quality){
-        return videoInfo?.streamUrls?[key];
+        return streams[key];
       }
     }
     return null;

@@ -7,13 +7,17 @@ import 'package:toffee_gravy/toffee_gravy.dart' show Channel;
 import 'package:toffee_gravy/utils/utils.dart' show getJsonPath;
 
 class Trending {
-  YoutubeApi? api;
+  
   final YoutubeClient client;
-  PageHandler? handler;
   final List<ShortInfo> shorts = [];
   final List<Info> videos = [];
-  Trending({required this.client, this.api}) {
-    api ??= WebApi();
+
+  //Will be Initialised later
+  late final PageHandler handler;
+  late final YoutubeApi api;
+  
+  Trending({required this.client, YoutubeApi? api}) {
+    this.api = api ?? WebApi();
     handler = PageHandler(client: client);
   }
 

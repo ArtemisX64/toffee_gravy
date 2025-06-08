@@ -12,20 +12,28 @@ class StreamInfo {
   final String? playlistId;
   final int? views;
   
-  final Map<dynamic, String>? streamUrls;
+  final Map<dynamic, String> _streamUrls;
   
 
-  const StreamInfo({
+  StreamInfo({
     required this.id,
     required this.title,
     required this.author,
     required this.channelId,
     required this.tags,
     required this.description,
+    
     this.playlistId,
-    this.streamUrls,
     this.views,
     this.channelThumbnail,
-  });
+    Map<dynamic, String>? streamUrls,
+  }): _streamUrls = streamUrls ?? {};
+
+  Map<dynamic, String>? getStreams() {
+    if(_streamUrls.isEmpty) {
+      return null;
+    }
+    return _streamUrls;
+  }
 
 }

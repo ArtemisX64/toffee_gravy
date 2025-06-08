@@ -5,7 +5,7 @@ import 'package:toffee_gravy/model/codecs/cvideo.dart';
 import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/url_handler.dart';
-import 'package:toffee_gravy/reverse/youtube/internal/stream/stream_info.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/models/stream_info.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
 import 'package:toffee_gravy/utils/exceptions.dart';
 
