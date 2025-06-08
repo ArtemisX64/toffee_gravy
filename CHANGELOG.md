@@ -12,3 +12,7 @@
 
 ## 1.1.8
 - Updated to include channel extractor
+
+## 1.1.10
+- Added support for recommended videos
+- Style fixes

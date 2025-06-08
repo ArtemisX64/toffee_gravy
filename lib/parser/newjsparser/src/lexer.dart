@@ -13,7 +13,12 @@ class ParseError {
   int endOffset;
 
   ParseError(
-      this.message, this.filename, this.line, this.startOffset, this.endOffset);
+    this.message,
+    this.filename,
+    this.line,
+    this.startOffset,
+    this.endOffset,
+  );
 
   String get location => filename == null ? 'Line $line' : '$filename:$line';
 
@@ -26,10 +31,10 @@ class Token {
   int line;
   int type;
   String?
-      text; // text exactly as in source code or null for EOF or tokens with type > 31
+  text; // text exactly as in source code or null for EOF or tokens with type > 31
   bool afterLinebreak; // true if first token after a linebreak
   String?
-      value; // value of identifier or string literal after escapes, null for other tokens
+  value; // value of identifier or string literal after escapes, null for other tokens
 
   /// For tokens that can be used as binary operators, this indicates their relative precedence.
   /// Set to -100 for other tokens.
@@ -176,8 +181,13 @@ bool isEOL(int x) {
 }
 
 class Lexer {
-  Lexer(String text,
-      {this.filename, this.endOfFile, this.currentLine = 1, this.index = 0}) {
+  Lexer(
+    String text, {
+    this.filename,
+    this.endOfFile,
+    this.currentLine = 1,
+    this.index = 0,
+  }) {
     input = text.codeUnits;
     endOfFile ??= input.length;
   }
@@ -323,8 +333,9 @@ class Lexer {
       tokenLine = currentLine;
       switch (x) {
         case char.NULL:
-          return emitToken(Token
-              .EOF); // (will produce infinite EOF tokens if pressed for more tokens)
+          return emitToken(
+            Token.EOF,
+          ); // (will produce infinite EOF tokens if pressed for more tokens)
 
         case char
             .SPACE: // Note: Exotic whitespace symbols are handled in the default clause.
@@ -596,7 +607,8 @@ class Lexer {
             continue;
           }
           fail(
-              "Unrecognized character: '${String.fromCharCode(x)}' (UTF+${x.toRadixString(16)})");
+            "Unrecognized character: '${String.fromCharCode(x)}' (UTF+${x.toRadixString(16)})",
+          );
       }
     }
   }
@@ -636,8 +648,10 @@ class Lexer {
       // Parse flags
       x = next();
     }
-    return emitToken(Token.REGEXP,
-        String.fromCharCodes(input.getRange(slash.startOffset, index)));
+    return emitToken(
+      Token.REGEXP,
+      String.fromCharCodes(input.getRange(slash.startOffset, index)),
+    );
   }
 
   Token scanStringLiteral(int x) {

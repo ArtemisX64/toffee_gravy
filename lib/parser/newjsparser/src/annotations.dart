@@ -59,12 +59,13 @@ class EnvironmentBuilder extends RecursiveVisitor<Null> {
     visit(node.function);
   }
 
- @override
+  @override
   visitVariableDeclarator(VariableDeclarator node) {
     addVar(node.name);
     node.forEach(visit);
   }
- @override
+
+  @override
   visitCatchClause(CatchClause node) {
     node.environment = {};
     node.environment?.add(node.param.value);
@@ -89,12 +90,15 @@ class Resolver extends RecursiveVisitor<Null> {
     String name = nameNode.value;
     Node? parent = nameNode.parent;
     Node node = nameNode;
-    if (parent != null && parent is FunctionNode && parent.name == node && !parent.isExpression) {
+    if (parent != null &&
+        parent is FunctionNode &&
+        parent.name == node &&
+        !parent.isExpression) {
       node = parent.parent!;
     }
     Scope scope = enclosingScope(node);
     while (scope is! Program) {
-      if (scope.environment == null){
+      if (scope.environment == null) {
         throw ToffeeJsException(message: "$scope does not have an environment");
       }
       if (scope.environment!.contains(name)) return scope;

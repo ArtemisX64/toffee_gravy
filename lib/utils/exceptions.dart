@@ -7,25 +7,29 @@ class BitterToffee implements Exception {
 }
 
 class HttpNotFoundException extends BitterToffee {
-  HttpNotFoundException({String? message}): super('Http Not Found(${message ?? ''})');
+  HttpNotFoundException({String? message})
+    : super('Http Not Found(${message ?? ''})');
 }
 
 class InvalidUrl extends BitterToffee {
-  InvalidUrl({String? message}): super('Invalid Url(${message ?? ''})');
+  InvalidUrl({String? message}) : super('Invalid Url(${message ?? ''})');
 }
 
 class StreamClosed extends BitterToffee {
-  StreamClosed({String? message}): super('Stream Closed(${message ?? ''})');
+  StreamClosed({String? message}) : super('Stream Closed(${message ?? ''})');
 }
 
 class NoValidCodecFound extends BitterToffee {
-  NoValidCodecFound({String? message}): super('No Valid Codec Found(${message ?? ''})');
+  NoValidCodecFound({String? message})
+    : super('No Valid Codec Found(${message ?? ''})');
 }
 
-class RequestParameterNotFound extends BitterToffee{
-  RequestParameterNotFound({String? message}): super('No Request Parameter Found(${message ?? ''})');
+class RequestParameterNotFound extends BitterToffee {
+  RequestParameterNotFound({String? message})
+    : super('No Request Parameter Found(${message ?? ''})');
 }
 
 class ToffeeJsException extends BitterToffee {
- ToffeeJsException({String? message}): super('Json Parser (${message ?? ''})');
+  ToffeeJsException({String? message})
+    : super('Json Parser (${message ?? ''})');
 }

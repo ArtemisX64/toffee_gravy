@@ -1,6 +1,6 @@
 name: toffee_gravy
 description: A sample command-line application.
-version: 1.1.8
+version: 1.1.10
 repository: https://github.com/ArtemisX64/toffee_gravy
 
 environment:

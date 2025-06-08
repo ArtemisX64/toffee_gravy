@@ -1,7 +1,6 @@
 import 'package:toffee_gravy/utils/utils.dart' show BasicChannel;
 import 'package:toffee_gravy/model/thumbnail.dart';
 
-
 class TrendingInfo {
   final List<Info> infos;
   final List<Info> shortInfos;
@@ -22,7 +21,14 @@ class Info extends BasicInfo {
     required this.channel,
     required this.length,
     required this.published,
-  }) : super(videoId, title,descriptionSnippet, viewCount, shortViewCount, thumbnail);
+  }) : super(
+         videoId,
+         title,
+         descriptionSnippet,
+         viewCount,
+         shortViewCount,
+         thumbnail,
+       );
 }
 
 class ShortInfo extends BasicInfo {
@@ -32,7 +38,14 @@ class ShortInfo extends BasicInfo {
     required String? descriptionSnippet,
     required String viewCount,
     required VideoThumbnail thumbnail,
-  }) : super(videoId, title, descriptionSnippet, viewCount,viewCount, thumbnail);
+  }) : super(
+         videoId,
+         title,
+         descriptionSnippet,
+         viewCount,
+         viewCount,
+         thumbnail,
+       );
 }
 
 class BasicInfo {

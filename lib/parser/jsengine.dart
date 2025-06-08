@@ -9,9 +9,7 @@ class JSEngine {
 
   JSEngine(this.context) {
     context['Date'] = (List<dynamic> args) => DateTime.parse(args[0]);
-    context['Math'] = {
-      'pow': (List<dynamic> args) => pow(args[0], args[1]),
-    };
+    context['Math'] = {'pow': (List<dynamic> args) => pow(args[0], args[1])};
     context['String'] = {
       'fromCharCode': (List<dynamic> args) {
         return String.fromCharCodes(args.cast<int>());
@@ -59,8 +57,8 @@ class JSEngine {
       BlockStatement() => statement.body.forEach(resolveStatement),
       ForStatement() => resolveForStatement(statement),
       // NOTE: this actually doesnt make the called function return (unless the return is the last statement), but it helps with the dechipering since YT sometimes introduces early returns to mess with the dechiperer.
-      ReturnStatement() => context['return'] =
-          resolveExpression(statement.argument!),
+      ReturnStatement() =>
+        context['return'] = resolveExpression(statement.argument!),
       SwitchStatement() => resolveSwitchStatement(statement),
       BreakStatement() => throw BreakException(),
       ContinueStatement() => throw ContinueException(),
@@ -86,7 +84,7 @@ class JSEngine {
     try {
       statement.block.forEach(resolveNode);
     } catch (e) {
-     print('Caught exception: $e');
+      print('Caught exception: $e');
       final handler = statement.handler;
       if (handler == null) {
         rethrow;
@@ -163,15 +161,13 @@ class JSEngine {
     final args = call.arguments;
 
     final resolvedArgs = args.map((arg) => resolveExpression(arg)).toList();
-    print(
-        'Calling ${call.callee}[$callee] with ${resolvedArgs.length} args');
+    print('Calling ${call.callee}[$callee] with ${resolvedArgs.length} args');
     // FunctionExpression returns a record with the actual function and the number of arguments it takes
     if (callee case (Function f, int())) {
       return f(resolvedArgs);
     }
     return callee(resolvedArgs);
   }
-
 
   dynamic _resolveMember(dynamic obj, String prop) {
     if (obj is Map) {
@@ -307,7 +303,7 @@ class JSEngine {
           return context['return'];
         }
       },
-      node.params.length
+      node.params.length,
     );
   }
 
@@ -330,8 +326,10 @@ class JSEngine {
       '+=' => container[name] += value,
       '-=' => container[name] -= value,
       '*=' => container[name] *= value,
-      _ => throw UnimplementedError(
-          'Unknown assignment operator: ${expr.operator}'),
+      _ =>
+        throw UnimplementedError(
+          'Unknown assignment operator: ${expr.operator}',
+        ),
     };
   }
 
@@ -364,8 +362,7 @@ class JSEngine {
   dynamic resolveBinaryExpression(BinaryExpression expr) {
     // && returns the first falsy value or the last value
     // || returns the first truthy value or the last value
-    print(
-        'Binary(${expr.operator}) L:( ${expr.left} )  R:( ${expr.right} )');
+    print('Binary(${expr.operator}) L:( ${expr.left} )  R:( ${expr.right} )');
 
     if (expr.operator == '&&' || expr.operator == '||') {
       final left = resolveExpression(expr.left);
@@ -436,8 +433,10 @@ class JSEngine {
       '-' => -arg,
       '!' => !toBoolean(arg),
       'typeof' => typeof(arg),
-      _ => throw UnimplementedError(
-          'Unknown unary operator: ${expr.operator} on $arg'),
+      _ =>
+        throw UnimplementedError(
+          'Unknown unary operator: ${expr.operator} on $arg',
+        ),
     };
   }
 
@@ -471,7 +470,8 @@ class JSEngine {
     final obj = resolveExpression(expr.object);
     if (obj == null) {
       throw StateError(
-          'Cannot resolve index on null object: ${expr.object}[$index]');
+        'Cannot resolve index on null object: ${expr.object}[$index]',
+      );
     }
     if (obj is List && index is int) {
       return obj[index];
@@ -526,8 +526,12 @@ class JSEngine {
   }
 }
 
-List<T> _splice<T>(List<T> array, int start,
-    [int? deleteCount, List<T>? items]) {
+List<T> _splice<T>(
+  List<T> array,
+  int start, [
+  int? deleteCount,
+  List<T>? items,
+]) {
   // Convert start to a valid index
   final length = array.length;
 

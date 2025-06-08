@@ -6,7 +6,6 @@ import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
 import 'package:toffee_gravy/utils/utils.dart' show BasicChannel, getJsonPath;
 
 class Trending {
-  
   final YoutubeClient client;
   final List<ShortInfo> shorts = [];
   final List<Info> videos = [];
@@ -14,7 +13,7 @@ class Trending {
   //Will be Initialised later
   late final PageHandler handler;
   late final YoutubeApi _api;
-  
+
   Trending({required this.client, YoutubeApi? api}) {
     _api = api ?? WebApi();
     handler = PageHandler(client: client, api: _api);

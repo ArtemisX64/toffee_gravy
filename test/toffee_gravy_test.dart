@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/extractor/recommended_extractor.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
 import 'package:toffee_gravy/toffee_gravy.dart';
-
 
 void main() {
   test('trending', () async {
@@ -22,26 +22,26 @@ void main() {
   test('get1080pVideoForAndroidVR', () async {
     var api = AndroidVRApi();
     var client = YoutubeClient();
-    
+
     var watchClient = WatchInfo(client: client);
     await watchClient.initStream("qr1AvisQcV8", api: api);
-   //print(watchClient.getVideoUrl(VideoCodecType.vp9, Cquality.hd720));
+    //print(watchClient.getVideoUrl(VideoCodecType.vp9, Cquality.hd720));
   });
 
   test('get4KVideoForAndroidVR', () async {
     var api = AndroidVRApi();
     var client = YoutubeClient();
 
-     var watchClient = WatchInfo(client: client);
+    var watchClient = WatchInfo(client: client);
     await watchClient.initStream("qr1AvisQcV8", api: api);
     //print(watchClient.getVideoUrl(VideoCodecType.vp9, Cquality.hd2160));
   });
 
   test('get4KVideoForAndroid', () async {
     var api = AndroidApi();
-     var client = YoutubeClient();
+    var client = YoutubeClient();
 
-     var watchClient = WatchInfo(client: client);
+    var watchClient = WatchInfo(client: client);
     await watchClient.initStream("qr1AvisQcV8", api: api);
     //print(watchClient.getVideoUrl(VideoCodecType.vp9, Cquality.hd2160));
   });
@@ -50,7 +50,7 @@ void main() {
     var api = IosApi();
     var client = YoutubeClient();
 
-     var watchClient = WatchInfo(client: client);
+    var watchClient = WatchInfo(client: client);
     await watchClient.initStream("qr1AvisQcV8", api: api);
     //print(watchClient.getAudioUrl(AudioCodecType.opus, Cquality.small));
   });
@@ -67,5 +67,9 @@ void main() {
     await channel.init(id: "UCgKkNPU2Ib7_TcyAl8M2S-w", client: client);
   });
 
-
+  test('getRecommended', () async {
+    var client = YoutubeClient();
+    final recommendedExtractor = RecommendedExtractor(client);
+    await recommendedExtractor.init(id: 'qr1AvisQcV8');
+  });
 }

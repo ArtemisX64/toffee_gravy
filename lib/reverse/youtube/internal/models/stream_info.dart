@@ -7,9 +7,8 @@ class StreamInfo {
   final List<String> tags;
   final String? playlistId;
   final int? views;
-  
+
   final Map<dynamic, String> _streamUrls;
-  
 
   StreamInfo({
     required this.id,
@@ -18,17 +17,16 @@ class StreamInfo {
     required this.channelId,
     required this.tags,
     required this.description,
-    
+
     this.playlistId,
     this.views,
     Map<dynamic, String>? streamUrls,
-  }): _streamUrls = streamUrls ?? {};
+  }) : _streamUrls = streamUrls ?? {};
 
   Map<dynamic, String>? getStreams() {
-    if(_streamUrls.isEmpty) {
+    if (_streamUrls.isEmpty) {
       return null;
     }
     return _streamUrls;
   }
-
 }

@@ -295,15 +295,17 @@ class ContinueStatement extends Statement {
   Name? label; // May be null.
 
   ContinueStatement(this.label);
-@override
+  @override
   forEach(callback) {
     if (label != null) callback(label!);
   }
-@override
+
+  @override
   String toString() => 'ContinueStatement';
-@override
+  @override
   visitBy<T>(Visitor<T> v) => v.visitContinue(this);
-  @override visitBy1<T, A>(Visitor1<T, A> v, A arg) => v.visitContinue(this, arg);
+  @override
+  visitBy1<T, A>(Visitor1<T, A> v, A arg) => v.visitContinue(this, arg);
 }
 
 /// Statement of form: `with ([object]) { [body] }`
@@ -312,16 +314,18 @@ class WithStatement extends Statement {
   Statement body;
 
   WithStatement(this.object, this.body);
-@override
+  @override
   forEach(callback) {
     callback(object);
     callback(body);
   }
-@override
+
+  @override
   String toString() => 'WithStatement';
-@override
+  @override
   visitBy<T>(Visitor<T> v) => v.visitWith(this);
-  @override visitBy1<T, A>(Visitor1<T, A> v, A arg) => v.visitWith(this, arg);
+  @override
+  visitBy1<T, A>(Visitor1<T, A> v, A arg) => v.visitWith(this, arg);
 }
 
 /// Statement of form: `switch ([argument]) { [cases] }`
@@ -903,6 +907,7 @@ class IndexExpression extends Expression {
     callback(object);
     callback(property);
   }
+
   @override
   String toString() => 'IndexExpression';
   @override

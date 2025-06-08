@@ -58,11 +58,10 @@ class YoutubeApi {
     };
   }
 
-
   //All the Getters
   String get clientName => _clientName;
   String get clientVersion => _clientVersion;
-  String? get deviceMake  => _deviceMake;
+  String? get deviceMake => _deviceMake;
   String? get deviceModel => _deviceModel;
   String? get hl => _hl;
   String? get platform => _platform;
@@ -94,10 +93,9 @@ class IosApi extends YoutubeApi {
       );
 }
 
-
 //Made after Android app
 class AndroidApi extends YoutubeApi {
-    AndroidApi({String? hl, String? gl})
+  AndroidApi({String? hl, String? gl})
     : super(
         clientName: 'ANDROID',
         clientVersion: _androidClientVersion,
@@ -113,17 +111,18 @@ class AndroidApi extends YoutubeApi {
 
 //Made for web client
 class WebApi extends YoutubeApi {
-  WebApi({String? hl, String? gl}) : super(
-    clientName: 'WEB',
-    clientVersion: _webClientVersion,
-    timeZone: 'UTC',
-    hl: hl ?? 'en',
-    gl: gl ?? 'US',
-    userAgent: 'Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0,gzip(gfe)',
-    utcOffsetMinutes: 0,
-  );
+  WebApi({String? hl, String? gl})
+    : super(
+        clientName: 'WEB',
+        clientVersion: _webClientVersion,
+        timeZone: 'UTC',
+        hl: hl ?? 'en',
+        gl: gl ?? 'US',
+        userAgent:
+            'Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0,gzip(gfe)',
+        utcOffsetMinutes: 0,
+      );
 }
-
 
 // Thanks youtube explode dart for explaining about AndroidVR
 class AndroidVRApi extends YoutubeApi {

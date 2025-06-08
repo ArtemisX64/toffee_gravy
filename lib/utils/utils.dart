@@ -1,4 +1,3 @@
-
 class Dimensions {
   final int width;
   final int height;
@@ -14,19 +13,16 @@ class BasicChannel {
   BasicChannel(this.name, this.id, this.avatar);
 }
 
-enum Country {
-  india,
-  japan
-}
+enum Country { india, japan }
 
 class CountryCode {
   final Country country;
   CountryCode({required this.country});
 
-  String _toString() => switch(country){
-    Country.india => "IN"  ,
+  String _toString() => switch (country) {
+    Country.india => "IN",
     Country.japan => "JP",
-    };
+  };
 
   String linkHandler(String link) {
     final countryCode = _toString();
@@ -36,15 +32,13 @@ class CountryCode {
 }
 
 dynamic getJsonPath(Map json, List keys) {
-  dynamic value = json; 
+  dynamic value = json;
   for (final key in keys) {
-    if(value is Map && value.containsKey(key)) {
+    if (value is Map && value.containsKey(key)) {
       value = value[key];
-    }
-    else if(value is List && key is int && key < value.length) {
+    } else if (value is List && key is int && key < value.length) {
       value = value[key];
-    }
-    else {
+    } else {
       return null;
     }
   }

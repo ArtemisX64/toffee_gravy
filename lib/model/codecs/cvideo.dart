@@ -6,7 +6,7 @@ enum VideoCodecType { avc1, av01, vp09, vp9 }
 
 class VideoCodec extends Codec {
   late final VideoCodecType codec;
-  late  final VideoQuality quality;
+  late final VideoQuality quality;
   VideoCodec(String codecString, String qualityString) {
     final videoCodec = super.getCodec(codecString);
     switch (videoCodec) {

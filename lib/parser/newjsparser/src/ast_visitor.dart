@@ -321,7 +321,8 @@ class BaseVisitor1<T, A> implements Visitor1<T?, A> {
   @override
   T? visitBinary(BinaryExpression node, A arg) => defaultNode(node, arg);
   @override
-  T? visitAssignment(AssignmentExpression node, A arg) => defaultNode(node, arg);
+  T? visitAssignment(AssignmentExpression node, A arg) =>
+      defaultNode(node, arg);
   @override
   T? visitUpdateExpression(UpdateExpression node, A arg) =>
       defaultNode(node, arg);
