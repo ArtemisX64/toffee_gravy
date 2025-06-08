@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:toffee_gravy/model/codecs/caudio.dart';
 import 'package:toffee_gravy/model/codecs/cvideo.dart';
-import 'package:toffee_gravy/model/thumbnail.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/url_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/models/stream_info.dart';
@@ -81,31 +80,7 @@ class StreamHandler {
       keywords.add(keyword.toString());
     }
     }
-  
-    //Thumbnail
-     Thumbnail? channelThumbnails;
-    final elements = jsonResponse["endscreen"]?["endscreenRenderer"]?["elements"];
-    if(elements != null){
-    var jChannelThumbnails = [];
-    for (var element in elements) {
-      if (element['endscreenElementRenderer']?['style'].contains('CHANNEL')) {
-        jChannelThumbnails =
-            element['endscreenElementRenderer']?['image']?['thumbnails'];
-        break;
-      }
-    }
-    Map<(int, int), String> mChannelThumbnails = {};
-    
-    if (jChannelThumbnails.isNotEmpty) {
-      for (final thumbnail in jChannelThumbnails) {
-        mChannelThumbnails[(thumbnail['width'], thumbnail['height'])] =
-            thumbnail['url'];
-      }
-    }
-    if (mChannelThumbnails.isNotEmpty) {
-      channelThumbnails = Thumbnail(mChannelThumbnails);
-    }
-    }
+
     //Streams
     final streamingData = jsonResponse['streamingData']?['adaptiveFormats'];
     Map<dynamic, String> streamUrls = {};
@@ -127,7 +102,6 @@ class StreamHandler {
       views: viewCount,
       description: shortDescription,
       tags: keywords,
-      channelThumbnail: channelThumbnails,
       streamUrls: streamUrls,
     );
   }

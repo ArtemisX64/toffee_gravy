@@ -12,38 +12,38 @@ class WatchInfo {
   }
 
 
-  List<Cquality>? getAvailableVideoFormats(VideoCodecType videoCodec){
+  List<VideoQuality>? getAvailableVideoFormats(VideoCodecType videoCodec){
     final streams = _info.getStreams();
     if(streams == null) {
       return null;
     }
     final keys = streams.keys.toList();
-    List<Cquality> formats = [];
+    List<VideoQuality> formats = [];
     for (final key in keys){
       if(key is VideoCodec && key.codec == videoCodec){
-        formats.add(key.quality!);
+        formats.add(key.quality);
       }
     }
     return formats;
 
   }
 
-  List<Cquality>? getAvailableAudioFormats(AudioCodecType audioCodec) {
+  List<AudioQuality>? getAvailableAudioFormats(AudioCodecType audioCodec) {
     final streams = _info.getStreams();
     if (streams == null) {
       return null;
     }
     final keys = streams.keys.toList();
-    List<Cquality> formats = [];
+    List<AudioQuality> formats = [];
     for (final key in keys){
       if(key is AudioCodec && key.codec == audioCodec){
-        formats.add(key.quality!);
+        formats.add(key.quality);
       }
     }
     return formats;
   }
 
-  String? getVideoUrl(VideoCodecType videoCodec,Cquality quality) {
+  String? getVideoUrl(VideoCodecType videoCodec,VideoQuality quality) {
     final streams = _info.getStreams();
     if (streams == null) {
       return null;
@@ -57,13 +57,7 @@ class WatchInfo {
     return null;
   }
 
-  String? getAudioUrl(AudioCodecType audioCodec, Cquality quality) {
-    switch(quality) {
-      case Cquality.tiny:
-      case Cquality.small:
-      case Cquality.medium: break;
-      default: quality = Cquality.medium;
-    }
+  String? getAudioUrl(AudioCodecType audioCodec, AudioQuality quality) {
     final streams = _info.getStreams();
     if (streams == null) {
       return null;

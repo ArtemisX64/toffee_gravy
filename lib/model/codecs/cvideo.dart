@@ -6,7 +6,7 @@ enum VideoCodecType { avc1, av01, vp09, vp9 }
 
 class VideoCodec extends Codec {
   late final VideoCodecType codec;
-  late  final Cquality quality;
+  late  final VideoQuality quality;
   VideoCodec(String codecString, String qualityString) {
     final videoCodec = super.getCodec(codecString);
     switch (videoCodec) {
@@ -28,28 +28,28 @@ class VideoCodec extends Codec {
 
     switch (qualityString) {
       case ("tiny"):
-        quality = Cquality.tiny;
+        quality = VideoQuality.sd144;
         break;
       case ("small"):
-        quality = Cquality.small;
+        quality = VideoQuality.sd240;
         break;
       case ("medium"):
-        quality = Cquality.medium;
+        quality = VideoQuality.sd360;
         break;
       case ("large"):
-        quality = Cquality.large;
+        quality = VideoQuality.sd480;
         break;
       case ("hd720"):
-        quality = Cquality.hd720;
+        quality = VideoQuality.hd720;
         break;
       case ("hd1080"):
-        quality = Cquality.hd1080;
-        break;
-      case ("hd2160"):
-        quality = Cquality.hd2160;
+        quality = VideoQuality.hd1080;
         break;
       case ("hd1440"):
-        quality = Cquality.hd1440;
+        quality = VideoQuality.hd1440;
+        break;
+      case ("hd2160"):
+        quality = VideoQuality.hd2160;
         break;
       default:
         throw BitterToffee("Invalid Quality: $qualityString");

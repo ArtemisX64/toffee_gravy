@@ -8,7 +8,6 @@ class StreamInfo {
   final String channelId;
   final String? description;
   final List<String> tags;
-  final Thumbnail? channelThumbnail;
   final String? playlistId;
   final int? views;
   
@@ -25,7 +24,6 @@ class StreamInfo {
     
     this.playlistId,
     this.views,
-    this.channelThumbnail,
     Map<dynamic, String>? streamUrls,
   }): _streamUrls = streamUrls ?? {};
 

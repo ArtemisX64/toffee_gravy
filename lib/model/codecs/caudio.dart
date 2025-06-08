@@ -10,7 +10,7 @@ enum AudioCodecType{
 
 class AudioCodec extends Codec {
   late final AudioCodecType codec;
-  late final Cquality quality;
+  late final AudioQuality quality;
 
   AudioCodec(String codecString, String audioQuality) {
     final audioCodec = super.getCodec(codecString);
@@ -26,9 +26,9 @@ class AudioCodec extends Codec {
     }
 
     switch(audioQuality) {
-      case ('AUDIO_QUALITY_MEDIUM'): quality = Cquality.medium; break;
-      case ('AUDIO_QUALITY_LOW'): quality = Cquality.small; break;
-      case ('AUDIO_QUALITY_ULTRALOW'): quality = Cquality.tiny; break;
+      case ('AUDIO_QUALITY_MEDIUM'): quality = AudioQuality.medium; break;
+      case ('AUDIO_QUALITY_LOW'): quality = AudioQuality.small; break;
+      case ('AUDIO_QUALITY_ULTRALOW'): quality = AudioQuality.tiny; break;
       default: throw BitterToffee('Audio Quality Error: $audioQuality');
     }
   }

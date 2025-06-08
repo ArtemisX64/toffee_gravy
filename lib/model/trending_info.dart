@@ -18,7 +18,7 @@ class Info extends BasicInfo {
     required String viewCount,
     required String shortViewCount,
     required String? descriptionSnippet,
-    required Thumbnail thumbnail,
+    required VideoThumbnail thumbnail,
     required this.channel,
     required this.length,
     required this.published,
@@ -31,7 +31,7 @@ class ShortInfo extends BasicInfo {
     required String title,
     required String? descriptionSnippet,
     required String viewCount,
-    required Thumbnail thumbnail,
+    required VideoThumbnail thumbnail,
   }) : super(videoId, title, descriptionSnippet, viewCount,viewCount, thumbnail);
 }
 
@@ -39,7 +39,7 @@ class BasicInfo {
   final String title;
   final String? descriptionSnippet;
   final String videoId;
-  final Thumbnail thumbnail;
+  final VideoThumbnail thumbnail;
   final String viewCount;
   final String shortViewCount;
 

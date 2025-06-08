@@ -22,7 +22,7 @@ class Trending {
   }
 
   Future<void> init() async {
-    final trending = await handler!.getPage('browse', 'FEtrending');
+    final trending = await handler.getPage('browse', 'FEtrending');
     var contents = getJsonPath(trending, [
       'tabs',
       0,
@@ -88,7 +88,7 @@ class Trending {
               title: i['title']['runs'][0]['text'],
               videoId: videoId,
               descriptionSnippet: descriptionSnippet,
-              thumbnail: Thumbnail(thumbnails),
+              thumbnail: VideoThumbnail(thumbnails),
               viewCount: viewCount,
               shortViewCount: shortViewCount,
               channel: channel,
@@ -145,7 +145,7 @@ class Trending {
               title: title,
               videoId: videoId,
               descriptionSnippet: descriptionSnippet,
-              thumbnail: Thumbnail(thumbnail),
+              thumbnail: VideoThumbnail(thumbnail),
               viewCount: viewCount,
             ),
           );
