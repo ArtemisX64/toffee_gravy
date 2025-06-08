@@ -2,6 +2,7 @@ import 'package:test/test.dart';
 import 'package:toffee_gravy/pages/trending.dart';
 import 'package:toffee_gravy/pages/watch_info.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
+import 'package:toffee_gravy/reverse/youtube/internal/extractor/channel_extractor.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
 
@@ -64,5 +65,12 @@ void main() {
     await page.getPage('search', 'pokemon');
   });
 
+  test('verify channel Extractor', () async {
+    var client = YoutubeClient();
+    final channel = ChannelExtractor();
+    await channel.init(id: "UCgKkNPU2Ib7_TcyAl8M2S-w", client: client);
+  });
+
 
 }
+//UCgKkNPU2Ib7_TcyAl8M2S-w

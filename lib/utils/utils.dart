@@ -6,12 +6,12 @@ class Dimensions {
   Dimensions(this.width, this.height);
 }
 
-class Channel {
+class BasicChannel {
   final String name;
   final String id;
   final String avatar;
 
-  Channel(this.name, this.id, this.avatar);
+  BasicChannel(this.name, this.id, this.avatar);
 }
 
 enum Country {

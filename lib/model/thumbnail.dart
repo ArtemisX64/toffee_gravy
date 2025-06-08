@@ -1,5 +1,37 @@
 import 'package:toffee_gravy/model/codecs/cquality.dart';
 
+class Banner extends _Thumbnail {
+   Banner(Map<(int, int), String> thumbnails) {
+    final Map<BannerQuality, String> thumbnail = {};
+      thumbnails.forEach((key, value) {
+      switch (key) {
+        case (1060, 175): 
+        thumbnail[BannerQuality.tiny] = value;
+        break;
+        case (1138, 188):
+        thumbnail[BannerQuality.small] = value;
+        break;
+        case (1707, 283):
+        thumbnail[BannerQuality.medium] = value;
+        break;
+        case (2120, 351):
+        thumbnail[BannerQuality.large] = value;
+        break;
+           case (2276, 377):
+        thumbnail[BannerQuality.xl] = value;
+        break;
+           case (2560, 424):
+        thumbnail[BannerQuality.xxl] = value;
+        break;
+        default:
+          print("Invalid quality: $key");
+      }
+    });
+
+    super.thumbnail = thumbnail;
+  }  
+}
+
 class VideoThumbnail extends _Thumbnail {
   VideoThumbnail(Map<(int, int), String> thumbnails) {
     final Map<ThumbnailQuality, String> thumbnail = {};
@@ -31,6 +63,15 @@ class Avatar extends _Thumbnail {
     final Map<ThumbnailQuality, String> thumbnail = {};
     thumbnails.forEach((key, value) {
       switch (key) {
+        case (72, 72):
+         thumbnail[ThumbnailQuality.tiny] = value;
+          break;
+        case (120, 120):
+        thumbnail[ThumbnailQuality.small] = value;
+        break;
+        case (160, 160):
+        thumbnail[ThumbnailQuality.medium] = value;
+        break;
         case (900, 900):
           thumbnail[ThumbnailQuality.shorts] = value;
           break;
@@ -42,13 +83,7 @@ class Avatar extends _Thumbnail {
     super.thumbnail = thumbnail;
   }
 
-  @Deprecated("Use getThumbnail instead")
-  @override
-  String? getThumbnailGeneric(quality) {
-    return null;
-  }
-
-  String? getThumbnail() {
+  String? getThumbnailXL() {
     return super.getThumbnailGeneric(ThumbnailQuality.shorts);
   }
 }

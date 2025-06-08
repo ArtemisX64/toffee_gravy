@@ -4,3 +4,5 @@ enum AudioQuality {tiny, small, medium}
 
 //Shorts is the preferred quality for shorts
 enum ThumbnailQuality {tiny, small, medium, shorts}
+
+enum BannerQuality {tiny, small, medium, large, xl, xxl}

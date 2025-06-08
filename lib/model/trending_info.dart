@@ -1,4 +1,4 @@
-import 'package:toffee_gravy/utils/utils.dart' show Channel;
+import 'package:toffee_gravy/utils/utils.dart' show BasicChannel;
 import 'package:toffee_gravy/model/thumbnail.dart';
 
 
@@ -9,7 +9,7 @@ class TrendingInfo {
 }
 
 class Info extends BasicInfo {
-  final Channel channel;
+  final BasicChannel channel;
   final String length;
   final String published;
   const Info({

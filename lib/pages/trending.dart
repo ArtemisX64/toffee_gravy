@@ -3,8 +3,7 @@ import 'package:toffee_gravy/model/trending_info.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/api.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/page_handler.dart';
 import 'package:toffee_gravy/reverse/youtube/youtube_client_handler.dart';
-import 'package:toffee_gravy/toffee_gravy.dart' show Channel;
-import 'package:toffee_gravy/utils/utils.dart' show getJsonPath;
+import 'package:toffee_gravy/utils/utils.dart' show BasicChannel, getJsonPath;
 
 class Trending {
   
@@ -69,7 +68,7 @@ class Trending {
             0,
             'url',
           ]);
-          final channel = Channel(
+          final channel = BasicChannel(
             owner['text'],
             owner['navigationEndpoint']['browseEndpoint']['canonicalBaseUrl'],
             avatar,
