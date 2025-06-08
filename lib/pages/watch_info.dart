@@ -10,7 +10,7 @@ class WatchInfo {
 
   Future<void> initStream(String id, {YoutubeApi? api}) async {
     _info = await _handler.fetchStream(id, api: api ?? AndroidVRApi());
-    await _recommended.init(id: id, api: api ?? WebApi());
+    await _recommended.init(id: id);
   }
 
   List<VideoQuality>? getAvailableVideoFormats(VideoCodecType videoCodec) {

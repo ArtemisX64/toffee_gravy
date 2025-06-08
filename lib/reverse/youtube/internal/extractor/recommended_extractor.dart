@@ -12,7 +12,7 @@ class RecommendedExtractor {
   RecommendedExtractor(this._client, {String? visitorData})
     : _visitorData = visitorData;
 
-  Future<void> init({required String id, YoutubeApi? api}) async {
+  Future<void> init({required String id}) async {
     final UrlHandler urlHandler = UrlHandler();
     urlHandler.constructUrl('next');
     final url = urlHandler.url;
@@ -20,7 +20,7 @@ class RecommendedExtractor {
       throw BitterToffee("Invalid Url");
     }
 
-    api ??= WebApi();
+    final api = WebApi();
     final visitorData = _visitorData ?? await _getVisitorData(api.userAgent);
     final body = {
       'context': {

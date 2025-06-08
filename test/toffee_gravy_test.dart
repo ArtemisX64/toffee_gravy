@@ -69,7 +69,8 @@ void main() {
 
   test('getRecommended', () async {
     var client = YoutubeClient();
-    final recommendedExtractor = RecommendedExtractor(client);
-    await recommendedExtractor.init(id: 'qr1AvisQcV8');
+    final WatchInfo watchInfo = WatchInfo(client: client);
+    await watchInfo.initStream('qr1AvisQcV8');
+    watchInfo.getRecommendedVideos()[0].title;
   });
 }
