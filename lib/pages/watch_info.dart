@@ -71,5 +71,14 @@ class WatchInfo {
     return null;
   }
 
+  //Getters to required info
+  String get title => _info.title;
+  String? get description => _info.description;
+  String get id => _info.id;
+  String get author => _info.author; 
+  String get channelId => _info.channelId;
+  List<String> get tags => _info.tags;
+  int? get views => _info.views;
+  String? get playlistId => _info.playlistId;
 
 }
