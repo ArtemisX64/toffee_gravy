@@ -9,3 +9,6 @@
 
 ## 1.1.2
 - Updated Null related issues in major code base
+
+## 1.1.8
+- Updated to include channel extractor

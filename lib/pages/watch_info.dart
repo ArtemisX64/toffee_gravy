@@ -5,10 +5,10 @@ import 'package:toffee_gravy/toffee_gravy.dart';
 class WatchInfo {
   final StreamHandler _handler;
   late final StreamInfo _info;
-  WatchInfo({required YoutubeClient client, YoutubeApi? api}): _handler = StreamHandler(client, api ?? AndroidVRApi());
+  WatchInfo({required YoutubeClient client}): _handler = StreamHandler(client);
 
-  Future<void> initStream(String id) async{
-   _info = await _handler.getStream(id);
+  Future<void> initStream(String id, {YoutubeApi? api}) async{
+   _info = await _handler.fetchStream(id, api: api ?? AndroidVRApi());
   }
 
 

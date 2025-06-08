@@ -28,7 +28,7 @@ class Banner extends _Thumbnail {
       }
     });
 
-    super.thumbnail = thumbnail;
+    super._thumbnail = thumbnail;
   }  
 }
 
@@ -54,7 +54,7 @@ class VideoThumbnail extends _Thumbnail {
       }
     });
 
-    super.thumbnail = thumbnail;
+    super._thumbnail = thumbnail;
   }
 }
 
@@ -80,7 +80,7 @@ class Avatar extends _Thumbnail {
       }
     });
 
-    super.thumbnail = thumbnail;
+    super._thumbnail = thumbnail;
   }
 
   String? getThumbnailXL() {
@@ -89,10 +89,10 @@ class Avatar extends _Thumbnail {
 }
 
 class _Thumbnail {
-  late final Map<dynamic, String> thumbnail;
+  late final Map<dynamic, String> _thumbnail;
 
   //The quality can be thumbnail quality or avatar quality
-  String? getThumbnailUrl(dynamic quality) => thumbnail[quality];
+  String? getThumbnailUrl(dynamic quality) => _thumbnail[quality];
 
   String? getThumbnailGeneric(dynamic quality) =>
       getThumbnailUrl(quality)?.split("?")[0];

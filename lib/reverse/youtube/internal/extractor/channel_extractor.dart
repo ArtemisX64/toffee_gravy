@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:toffee_gravy/model/channel_info.dart';
 import 'package:toffee_gravy/reverse/youtube/internal/handlers/url_handler.dart';
 import 'package:toffee_gravy/toffee_gravy.dart';
 

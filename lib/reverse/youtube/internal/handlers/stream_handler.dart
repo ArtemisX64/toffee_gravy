@@ -12,41 +12,41 @@ import 'package:toffee_gravy/utils/exceptions.dart';
 
 class StreamHandler {
   String? _visitorData;
-  YoutubeApi _api;
   final YoutubeClient _client;
 
-  StreamHandler(this._client, this._api);
+  StreamHandler(this._client, {String? visitorData}): _visitorData = visitorData;
 
-  Future<List<StreamInfo>> getStreams(List<String> ids) async {
+  Future<List<StreamInfo>> fetchStreams(List<String> ids, {YoutubeApi? api}) async {
+    api ??= WebApi();
     List<StreamInfo> streams = [];
     for (final id in ids) {
-      streams.add(await getStream(id));
+      streams.add(await fetchStream(id));
     }
     return streams;
   }
 
-  Future<StreamInfo> getStream(String id) async {
-    final visitorData = _visitorData ?? await _getVisitorData();
-
+  Future<StreamInfo> fetchStream(String id, {YoutubeApi? api}) async {
+    api ??= WebApi();
+    final visitorData = _visitorData ?? await _getVisitorData(api.userAgent);
     final body = {
       'context': {
         'client': {
-          'clientName': _api.clientName,
-          'clientVersion': _api.clientVersion,
-          if (_api.deviceMake != null) 'deviceMake': _api.deviceMake,
-          if (_api.deviceModel != null) 'deviceModel': _api.deviceModel,
-          if (_api.hl != null) 'hl': _api.hl,
-          if (_api.platform != null) "platform": _api.platform,
-          if (_api.osName != null) 'osName': _api.osName,
-          if (_api.osVersion != null) 'osVersion': _api.osVersion,
-          if (_api.timeZone != null) 'timeZone': _api.timeZone,
-          if (_api.userAgent != null)
+          'clientName': api.clientName,
+          'clientVersion': api.clientVersion,
+          if (api.deviceMake != null) 'deviceMake': api.deviceMake,
+          if (api.deviceModel != null) 'deviceModel': api.deviceModel,
+          if (api.hl != null) 'hl': api.hl,
+          if (api.platform != null) "platform": api.platform,
+          if (api.osName != null) 'osName': api.osName,
+          if (api.osVersion != null) 'osVersion': api.osVersion,
+          if (api.timeZone != null) 'timeZone': api.timeZone,
+          if (api.userAgent != null)
             'userAgent':
-                _api.userAgent,
-          if (_api.gl != null) 'gl': _api.gl,
-          if(_api.androidSdkVersion != null) 'androidSdkVersion' : _api.androidSdkVersion,
-          if (_api.utcOffsetMinutes != null) 'utcOffsetMinutes': _api.utcOffsetMinutes,
-          'visitorData': visitorData,
+                api.userAgent,
+          if (api.gl != null) 'gl': api.gl,
+          if(api.androidSdkVersion != null) 'androidSdkVersion' : api.androidSdkVersion,
+          if (api.utcOffsetMinutes != null) 'utcOffsetMinutes': api.utcOffsetMinutes,
+          if (visitorData != null) 'visitorData': visitorData,
         },
       },
       "videoId": id,
@@ -61,7 +61,7 @@ class StreamHandler {
     final response = await _client.getResponseAsString(
       playbackUrl.url!,
       reqType: RequestType.post,
-      headers: _api.generateHeader(),
+      headers: api.generateHeader(),
       body: body,
     );
 
@@ -107,17 +107,18 @@ class StreamHandler {
   }
 
   //Mitigate signin error in IOS
-  Future<String> _getVisitorData() async {
-    if (_api.userAgent == null) {
-      throw RequestParameterNotFound(
-        message: 'User Agent is Required for this operation',
+  Future<String?> _getVisitorData(String? userAgent) async {
+    if (userAgent == null) {
+      print(
+         'User Agent is Required for this operation',
       );
+      return null;
     }
     var response = await _client.getResponseAsString(
       'https://www.youtube.com/sw.js_data',
       reqType: RequestType.get,
       headers: {
-        if (_api.userAgent != null) 'User-Agent': _api.userAgent!,
+        'User-Agent': userAgent,
         'Content-Type': 'application/json',
       },
     );
@@ -131,5 +132,4 @@ class StreamHandler {
     return _visitorData!;
   }
 
-  void changeApi(YoutubeApi api) => _api = api;
 }

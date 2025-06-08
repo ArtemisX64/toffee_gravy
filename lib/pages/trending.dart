@@ -13,11 +13,11 @@ class Trending {
 
   //Will be Initialised later
   late final PageHandler handler;
-  late final YoutubeApi api;
+  late final YoutubeApi _api;
   
   Trending({required this.client, YoutubeApi? api}) {
-    this.api = api ?? WebApi();
-    handler = PageHandler(client: client);
+    _api = api ?? WebApi();
+    handler = PageHandler(client: client, api: _api);
   }
 
   Future<void> init() async {
